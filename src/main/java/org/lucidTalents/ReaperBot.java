@@ -14,31 +14,38 @@ import java.io.IOException;
 
 public class ReaperBot{
     String token = getToken("src/main/resources/token.json");
+    DiscordClient client;
 
     public ReaperBot(){
         this.token = token;
+        this.client = login(this.token);
+        pingPong(this.client);
+        this.client.login().block();
+    }
+
+    protected DiscordClient login(String token){
         DiscordClientBuilder builder = new DiscordClientBuilder(this.token);
         DiscordClient client = builder.build();
 
         client.getEventDispatcher().on(ReadyEvent.class)
                 .subscribe(event -> {
-            User self = event.getSelf();
-            System.out.println(String.format("Logged in as %s#%s", self.getUsername(), self.getDiscriminator()));
-        });
+                    User self = event.getSelf();
+                    System.out.println(String.format("Logged in as %s#%s", self.getUsername(), self.getDiscriminator()));
+                });
 
+        return client;
+    }
+
+    protected void pingPong(DiscordClient client){
         client.getEventDispatcher().on(MessageCreateEvent.class)
                 .map(MessageCreateEvent::getMessage)
                 .filter(message ->message.getAuthor().map(user -> !user.isBot()).orElse(false))
                 .filter(message -> message.getContent().orElse("").equalsIgnoreCase("!ping"))
                 .flatMap(Message::getChannel)
                 .flatMap(channel -> channel.createMessage("Pong!"))
-                .subscribe();
-
-        client.login().block();
-    }
-
-    protected void login(String token){
-        //
+                .subscribe(event -> {
+                    System.out.println("Message Sent!");
+                });
     }
 
     private void setToken(){
