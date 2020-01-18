@@ -57,3 +57,12 @@ The initial minimum viable product is to create a bot that can be used by the mo
 ## First goal: Create a Discord Bot
 
 I must first create a discord bot that interacts within discord. The goal is to create a discord bot, add it to my discord, give it a bot role, and then make it count to ten using a "!count" command. 
+
+Update: Completed. Instead of "!count", we did a "!ping" ("pong" response) as the beginner guide suggests.
+
+## Second goal: Interact with Postman
+We will have to eventually interact to websites via API. Therefore, we should test it with Postman first. 
+
+URL: https://77d3ba3e-f9e2-4558-bff6-01656d90ea4a.mock.pstmn.io/test
+Method: GET
+Expected Response: {response:"test"}
