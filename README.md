@@ -64,5 +64,13 @@ Update: Completed. Instead of "!count", we did a "!ping" ("pong" response) as th
 We will have to eventually interact to websites via API. Therefore, we should test it with Postman first. 
 
 URL: https://77d3ba3e-f9e2-4558-bff6-01656d90ea4a.mock.pstmn.io/test
+
 Method: GET
+
 Expected Response: {response:"test"}
+
+**Note**: From this step, I realized I messed up my interaction pictures. IntelliJ uses the Discord Bot to interact with the Discord Servers (such as the APIs and Channels). The IntelliJ "server" (my computer running the code) is where I control the Discord Bot to interact with Discord, and where I communicate with other websites using HTTP Restful API. 
+
+TODO: Redo pictures to show real interaction. Perhaps use GIMP to get rid of whitespace, but should perhaps use powerpoint because it is easier to make simple pictures and it has higher reusability. 
+
+Now, I need to interact with Postman to use a POST command on the Postman mock server. 
