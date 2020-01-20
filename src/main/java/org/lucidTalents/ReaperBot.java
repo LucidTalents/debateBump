@@ -17,34 +17,72 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
 import reactor.netty.http.client.HttpClient;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.*;
+import java.util.Objects;
 
 public class ReaperBot{
     String token = getToken("src/main/resources/token.json");
     DiscordClient client;
 
     public ReaperBot(){
+        // login, wait for !bump, send http request out, send information to discord via bot.
+        // Imagine the bot is on discord, I am running this server, and the website is out there.
         this.token = token;
         this.client = login(this.token);
-        //pingPong(this.client);
-        httpRequest(this.client);
+        // pingPong(this.client);
+        // discordHttpRequest(this.client);
+        postmanHttpRequest();
         this.client.login().block();
     }
 
+
+    protected void postmanHttpRequest(){
+        // set connection
+        URL url = null;
+        HttpURLConnection con = null;
+        BufferedReader in = null;
+        String inputLine = null;
+
+        try {
+            url = new URL("https://77d3ba3e-f9e2-4558-bff6-01656d90ea4a.mock.pstmn.io/test");
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            int status = con.getResponseCode();
+            System.out.println(status);
+
+            in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            StringBuffer content = new StringBuffer();
+
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+                System.out.println(inputLine);
+            }
+
+            in.close();
+            con.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        System.out.println("Finished");
+
+    }
     /**
      * https://github.com/Discord4J/Discord4J/tree/master/rest is where I got the example from.
      * @param client
      */
-    protected void httpRequest(DiscordClient client){
+    protected void discordHttpRequest(DiscordClient client){
+
+        // Maps an object to JSON and vice versa
         ObjectMapper mapper = new ObjectMapper()
                 .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY)
                 .addHandler(new UnknownPropertyHandler(true))
                 .registerModules(new PossibleModule(), new Jdk8Module());
 
         DiscordWebClient webClient = new DiscordWebClient(HttpClient.create().compress(true),
-                ExchangeStrategies.jackson(mapper), token);
+                ExchangeStrategies.jackson(mapper), this.token);
 
         RouterOptions rOptions = RouterOptions.create();
         Router router = new DefaultRouter(webClient, rOptions);
