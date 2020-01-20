@@ -38,23 +38,21 @@ public class ReaperBot{
 
 
     protected void postmanHttpRequest(){
-        // set connection
-        URL url = null;
-        HttpURLConnection con = null;
-        BufferedReader in = null;
-        String inputLine = null;
-
+        // set connection and GET and then post. After this is completed, I should clean up my code a bit.
+        // POSTMAN sets up a mock endpoint. Can simulate examples/example commands.
+        // Add http requets get/post as an http interface to this bot.
         try {
-            url = new URL("https://77d3ba3e-f9e2-4558-bff6-01656d90ea4a.mock.pstmn.io/test");
-            con = (HttpURLConnection) url.openConnection();
+            URL url = new URL("https://77d3ba3e-f9e2-4558-bff6-01656d90ea4a.mock.pstmn.io/test");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
             int status = con.getResponseCode();
             System.out.println(status);
 
-            in = new BufferedReader(
+            BufferedReader in = new BufferedReader(
                     new InputStreamReader(con.getInputStream()));
             StringBuffer content = new StringBuffer();
 
+            String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 content.append(inputLine);
                 System.out.println(inputLine);
@@ -66,7 +64,9 @@ public class ReaperBot{
             e.printStackTrace();
         }
         
-        System.out.println("Finished");
+        System.out.println("Finished GETTING");
+
+        // Do Post.
 
     }
     /**
