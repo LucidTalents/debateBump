@@ -74,3 +74,6 @@ Expected Response: {response:"test"}
 TODO: Redo pictures to show real interaction. Perhaps use GIMP to get rid of whitespace, but should perhaps use powerpoint because it is easier to make simple pictures and it has higher reusability. 
 
 Now, I need to interact with Postman to use a POST command on the Postman mock server. 
+
+## Side Tour
+In order to get an MVP, we are using Disboard's manual bump bot. You go into a channel and type "!d bump" for a bump every 4 or so hours. However, you must do it manually. I was getting ready to automate it, but during testing I found out that bots cannot trigger the Disboard's bot. After that, I went back to the original plan. 
