@@ -8,6 +8,7 @@ import discord4j.core.*;
 import discord4j.core.event.domain.lifecycle.*;
 import discord4j.core.event.domain.message.*;
 import discord4j.core.object.entity.*;
+import discord4j.core.object.util.Snowflake;
 import discord4j.rest.RestClient;
 import discord4j.rest.http.*;
 import discord4j.rest.http.client.DiscordWebClient;
@@ -15,6 +16,7 @@ import discord4j.rest.request.*;
 import discord4j.rest.json.response.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.*;
+import reactor.core.publisher.Mono;
 import reactor.netty.http.client.HttpClient;
 
 import java.io.*;
@@ -30,9 +32,10 @@ public class ReaperBot{
         // Imagine the bot is on discord, I am running this server, and the website is out there.
         this.token = token;
         this.client = login(this.token);
-        // pingPong(this.client);
-        // discordHttpRequest(this.client);
-        postmanHttpRequest();
+        this.sendMessage("test!!");
+        //pingPong(this.client);
+        //discordHttpRequest(this.client);
+        // postmanHttpRequest();
         this.client.login().block();
     }
 
@@ -117,6 +120,18 @@ public class ReaperBot{
                 .subscribe(event -> {
                     System.out.println("Message Sent!");
                 });
+    }
+
+    /**
+     * send message to trigger another bot around the clock. Using class method instead of passing itself like other classes.
+     * https://github.com/Discord4J/Discord4J/wiki/Migration-Guide
+     */
+    protected void sendMessage(String msg){
+        String channelID = "593282979845898240";
+        TextChannel channel = (TextChannel) this.client.getChannelById(Snowflake.of(channelID)).block();
+        channel.createMessage(msg).block();
+
+    //subscribe(value -> System.out.println(value));
     }
 
     private void setToken(){
