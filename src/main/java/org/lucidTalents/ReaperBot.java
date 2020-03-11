@@ -31,12 +31,11 @@ public class ReaperBot{
         // login, wait for !bump, send http request out, send information to discord via bot.
         // Imagine the bot is on discord, I am running this server, and the website is out there.
         this.token = token;
-        this.client = login(this.token);
-        this.sendMessage("test!!");
+        this.client = this.login(this.token);
+        //this.sendMessage("!d bump");
         //pingPong(this.client);
         //discordHttpRequest(this.client);
         // postmanHttpRequest();
-        this.client.login().block();
     }
 
 
@@ -97,6 +96,9 @@ public class ReaperBot{
                 .subscribe(name -> System.out.println("My name is " + name));
     }
 
+    /*
+    Currently overloaded with normal discordJ4 block.
+     */
     protected DiscordClient login(String token){
         DiscordClientBuilder cBuilder = new DiscordClientBuilder(this.token);
         DiscordClient client = cBuilder.build();
@@ -125,10 +127,13 @@ public class ReaperBot{
     /**
      * send message to trigger another bot around the clock. Using class method instead of passing itself like other classes.
      * https://github.com/Discord4J/Discord4J/wiki/Migration-Guide
+     * To clean up: make channelID secret and a parameter for better visibility to what is going on.
      */
     protected void sendMessage(String msg){
-        String channelID = "593282979845898240";
-        TextChannel channel = (TextChannel) this.client.getChannelById(Snowflake.of(channelID)).block();
+        //String channelID = "593282979845898240";
+        String bumpID = "686401320231370838";
+        //TextChannel channel = (TextChannel) this.client.getChannelById(Snowflake.of(channelID)).block();
+        TextChannel channel = (TextChannel) this.client.getChannelById(Snowflake.of(bumpID)).block();
         channel.createMessage(msg).block();
 
     //subscribe(value -> System.out.println(value));
