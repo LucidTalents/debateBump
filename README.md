@@ -75,5 +75,10 @@ TODO: Redo pictures to show real interaction. Perhaps use GIMP to get rid of whi
 
 Now, I need to interact with Postman to use a POST command on the Postman mock server. 
 
-## Side Tour
+### Side Tour
 In order to get an MVP, we are using Disboard's manual bump bot. You go into a channel and type "!d bump" for a bump every 4 or so hours. However, you must do it manually. I was getting ready to automate it, but during testing I found out that bots cannot trigger the Disboard's bot. After that, I went back to the original plan. 
+
+### UPDATE 3/10/2020:
+I tried to get Postman to interact with Disboard, but Disboard bumps servers through their own bot. To login, you need to go through Discord and also use their own bot. I didn't look too much into it, but it is highly unlikely that their monetized bot can easily be circumvented. I originally thought bumping would be like in the old days where you edit your post to make it go to the top. 
+
+This project seems infeasible at the moment. Even though I couldn't finish this project, I gained a lot of skills through trying.  
